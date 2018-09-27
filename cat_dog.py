@@ -2,8 +2,8 @@
 #crete train test validation set
 #---------------------------------
 import os, shutil
-orginal_dir='/media/zahra/66048aa8-5d56-45a6-9c13-d1145235d158/pythonCode/catDog/resizeData'
-baseDir='/media/zahra/66048aa8-5d56-45a6-9c13-d1145235d158/pythonCode/catDog/baseDir'
+orginal_dir='pythonCode/catDog/resizeData'
+baseDir='pythonCode/catDog/baseDir'
 catDir=os.path.join(orginal_dir,'cat')
 dogDir=os.path.join(orginal_dir,'dog')
 os.mkdir(baseDir)
@@ -73,9 +73,9 @@ print(len(os.listdir(testCatDir)))
 #---------------------------------------
 #preprocessing and data augumation
 #--------------------------------------
-trainDir='/media/zahra/66048aa8-5d56-45a6-9c13-d1145235d158/pythonCode/catDog/baseDir/train'
-validDir='/media/zahra/66048aa8-5d56-45a6-9c13-d1145235d158/pythonCode/catDog/baseDir/valid'
-testDir='/media/zahra/66048aa8-5d56-45a6-9c13-d1145235d158/pythonCode/catDog/baseDir/test'
+trainDir='/pythonCode/catDog/baseDir/train'
+validDir='/pythonCode/catDog/baseDir/valid'
+testDir='/pythonCode/catDog/baseDir/test'
 
 from keras.preprocessing.image import ImageDataGenerator
 train_datagen=ImageDataGenerator(
@@ -109,7 +109,7 @@ test_generator=test_datagen.flow_from_directory(
 #---------------------------------
 import os
 from keras.preprocessing import image
-trainCatDir='/media/zahra/66048aa8-5d56-45a6-9c13-d1145235d158/pythonCode/catDog/baseDir/train/cat'
+trainCatDir='/pythonCode/catDog/baseDir/train/cat'
 fnames=[os.path.join(trainCatDir,fname) for
  fname in os.listdir(trainCatDir)]
 img_path=fnames[3]
