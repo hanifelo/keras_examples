@@ -38,6 +38,12 @@ valid_generator=valid_datagen.flow_from_directory(
     batch_size=20,
     target_size=(150,150),
     class_mode='binary')
+test_generator=test_datagen.flow_from_directory(
+    test_dir,
+    batch_size=20,
+    target_size=(150,150),
+    class_mode='binary')
+
 
 #freez VGG6 and train top layers
 from keras.applications import VGG16
@@ -84,20 +90,31 @@ history=model.fit_generator(
  validation_data=valid_generator,
  validation_steps=50)
 model.save('fine_tunning_cat_and-dig.h5')
+test_loss,test_acc=model.evaluate_generator(test_generator,steps=50)
+print('final test los is:    ',test_acc)
 #------------------------------------------------------
-#show result
+#show result by smooth points
 #-------------------------------------------------------
+def smooth_curve(points,factor=0.8):
+    smoothed_points=[]
+    for point in points:
+        if smoothed_points:
+            previous=smoothed_points[-1]
+            smoothed_points.append(previous*factor+point*(1-factor))
+        else:
+            smoothed_points.append(point)
+    return smoothed_points
+
 import matplotlib.pyplot as plt
 acc=history.history['acc']
 loss=history.history['loss']
 val_acc=history.history['val_acc']
 val_loss=history.history['val_loss']
 epochs=range(1,len(acc)+1)
-plt.plot(epochs,acc,'bo',label='tarining acc')
-plt.plot(epochs,val_acc,label='validation acc')
+plt.plot(epochs,smooth_curve(acc),'bo',label='tarining acc')
+plt.plot(epochs,smooth_curve(val_acc),label='validation acc')
 plt.show()
 
-plt.plot(epochs,loss,'bo',label='tarining loss')
-plt.plot(epochs,val_loss,label='validation loss')
+plt.plot(epochs,smooth_curve(loss),'bo',label='tarining loss')
+plt.plot(epochs,smooth_curve(val_loss),label='validation loss')
 plt.show()
-
