@@ -1,5 +1,6 @@
 #---------------------
-#train cat dog dataset with VGG16  and data agumation
+#transfer lerning by usuing feature extraction on pre trained VGG16 and data agumation
+#VGG16 layers as frozen and we use the features that was lerned before
 #--------------
 
 #train, test and validation address
